@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title>Register</title>
+        <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    </head>
+    <body>
+        <h2>Register</h2>
+        <form action="/action_page.php">
+            First name:<br>
+            <input type="text" name="firstname"><br>
+            Last name:<br>
+            <input type="text" name="lastname"><br>
+        </form>
+        <form>
+            E-mail:
+            <input type="email" name="email"><br>
+            Password:
+            <input type="password" name="psw">
+        </form>
+        <form action="/action_page.php">
+            Grade:
+            <select name="grades">
+                <option value="freshman">Freshman</option>
+                <option value="sophomore">Sophomore</option>
+                <option value="junior">Junior</option>
+                <option value="senior">Senior</option>
+            </select>
+        </form>
+        <form>
+            Gender: <br>
+            <input type="radio" name="gender" value="male" checked> Male<br>
+            <input type="radio" name="gender" value="female" checked> Female<br>
+            <input type="radio" name="gender" value="other" checked> Other<br>
+        </form>
+        <form action="/action_page.php">
+            <input type="checkbox" name="email" value="Yes"> I would like to receive email.
+        </form>
+        <form action="/action_page.php">
+            <input type="submit">
+            <input type="reset">
+        </form>
+    </body>
+</html>
