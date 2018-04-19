@@ -2,6 +2,8 @@
 # A very simple Flask Hello World app for you to get started with...
 
 from flask import Flask
+from flask import render_template
+import constants
 
 app = Flask(__name__)
 
@@ -15,8 +17,8 @@ def about_me():
 
 @app.route('/class_schedule')
 def class_schedule():
-    return app.send_static_file('class_schedule.html')
-
+    return render_template('class_schedule.html',
+                           courses=constants.COURSES)
 @app.route('/register')
 def register():
     return app.send_static_file('register.html')

@@ -1,0 +1,36 @@
+import course
+
+COURSES = [
+    course.Course(period=1,
+                  name='Intro to Computer Science',
+                  teacher_name='Ms. Lee',
+                  resource_name='repl.it',
+                  resource_url='https://repl.it/'),
+    course.Course(period=2,
+                  name='Alg 2 Honors',
+                  teacher_name='Mr. Shelton',
+                  resource_name='Khan Academy',
+                  resource_url='https://www.khanacademy.org/'),
+    course.Course(period=3,
+                  name='AP Lang. and Comp.',
+                  teacher_name='Ms. McCann',
+                  resource_name='Google Docs',
+                  resource_url='https://docs.google.com/'),
+    course.Course(period=4,
+                  name='Spanish 3',
+                  teacher_name='Ms. Geiser',
+                  resource_name='Wikipedia: Spain',
+                  resource_url='https://en.wikipedia.org/wiki/Spain'),
+    course.Course(period=5,
+                  name='US History',
+                  teacher_name='Ms. Clements',
+                  resource_name='History Day: ERA',
+                  resource_url='http://95223748.nhd.weebly.com/'),
+    course.Course(period=6,
+                  name='Biotechnology 1/2',
+                  teacher_name='Mr. Ng',
+                  resource_name='NCBI',
+                  resource_url='https://www.ncbi.nlm.nih.gov/'),
+]
+
+
