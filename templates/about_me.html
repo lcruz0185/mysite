@@ -1,10 +1,8 @@
-<html>
-    <head>
-        <title>About Loraine</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    </head>
-    <body>
-        <div class="container">
+{% extends "base.html" %}
+
+{% block title %}About Me{% endblock %}
+
+{% block content %}
         <h1>About Loraine:</h1>
         <p>I am a Junior in SSFHS.</p>
         <p>A 17-year old Filipino girl living in South San Francisco.</p>
@@ -34,6 +32,4 @@
         </ul>
         <h3>Need a Band Member?</h3>
         <p>I got you! I can sing, write lyrics, and help produce songs.</p>
-        </div>
-    </body>
-</html>
+{% endblock %}
