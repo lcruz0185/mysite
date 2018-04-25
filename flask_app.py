@@ -8,8 +8,8 @@ import constants
 app = Flask(__name__)
 
 @app.route('/')
-def hello_world():
-    return 'Hello from Loraine!'
+def homepage():
+    return render_template('index.html')
 
 @app.route('/about_me')
 def about_me():
