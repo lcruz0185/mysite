@@ -1,7 +1,7 @@
 class BaseConfig(object):
     SQLALCHEMY_DATABASE_URI = (
-        'mysql://<username>:'
-        '<database password>'
-        '@<username>.mysql.pythonanywhere-services.com/'
-        '<username>$mysitedb')
+        'mysql://lcruz0185:'
+        'ineedamiracle'
+        '@lcruz0185.mysql.pythonanywhere-services.com/'
+        'lcruz0185$mysitedb')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
