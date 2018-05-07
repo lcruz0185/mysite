@@ -4,7 +4,7 @@
 from flask import Flask
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
-import constants
+# import constants
 
 app = Flask(__name__)
 
@@ -46,7 +46,8 @@ def register():
 
 @app.route('/top_ten_songs')
 def top_ten_songs():
-    return render_template('top_ten_songs.html',songs=constants.TOP_TEN_SONGS)
+    songs = Song.query.all()
+    return render_template('top_ten_songs.html',songs=songs)
 
 if __name__ == '__main__':
   db.create_all()
