@@ -4,12 +4,15 @@
 from flask import Flask
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
+from flask_bootstrap import Bootstrap
 # import constants
 
 app = Flask(__name__)
 
 app.config.from_object('config.BaseConfig')
 db = SQLAlchemy(app)
+
+Bootstrap(app)
 
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
