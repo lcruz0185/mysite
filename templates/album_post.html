@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Album Posts{% endblock %}
+{% block content %}
+<div class="container">
+<h3>List an Album to Listen to</h3>
+{{ wtf.quick_form(form, button_map={'submit':'primary'}) }}
+<h3>Previous Albums</h3>
+{% for album_post in album_posts %}
+<p>{{ album_post.body }}</p>
+{% endfor %}
+</div>
+{% endblock %}

@@ -27,6 +27,8 @@ app = Flask(__name__)
 
 app.config.from_object('config.BaseConfig')
 db = SQLAlchemy(app)
+# username code (down) ****************************************
+#app.config['SQUALCHEMY_DATABASE_URI'] = 'sqlite:///relationships.db'
 
 login = LoginManager(app)
 
@@ -49,6 +51,18 @@ class Song(db.Model):
     title = db.Column(db.String(80))
     artist_name = db.Column(db.String(80))
     youtube_url = db.Column(db.String(300))
+
+#NEW PAGE#
+
+class Album_post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(280))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class AlbumForm(FlaskForm):
+    message = StringField('Album', validators=[InputRequired(), Length(max=280)])
+    submit = SubmitField('Post')
 
 class RegistrationForm(FlaskForm):
     username = StringField(
@@ -74,6 +88,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(15))
     email = db.Column(db.String(150))
     password_hash = db.Column(db.String(128))
+#   author = db.relationship('Author', backref="user")
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -86,6 +101,13 @@ class Post(db.Model):
     body = db.Column(db.String(280))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+'''
+class Author(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20))
+    user_id = db.column(db.Integer, db.ForeignKey('user.id')
+'''
 
 class PostForm(FlaskForm):
     message = StringField('Message', validators=[InputRequired(), Length(max=280)])
@@ -143,6 +165,11 @@ def logout():
     logout_user()
     return redirect(url_for('homepage'))
 
+@app.route('/top_ten_songs')
+def top_ten_songs():
+    songs = Song.query.all()
+    return render_template('top_ten_songs.html',songs=songs)
+
 @app.route('/posts', methods=['GET', 'POST'])
 def posts():
     if not current_user.is_authenticated:
@@ -156,10 +183,18 @@ def posts():
         posts.append(new_post)
     return render_template('posts.html', form=form, posts=posts)
 
-@app.route('/top_ten_songs')
-def top_ten_songs():
-    songs = Song.query.all()
-    return render_template('top_ten_songs.html',songs=songs)
+@app.route('/album_post', methods=['GET', 'POST'])
+def album_post():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    form = AlbumForm()
+    album_posts = Album_post.query.filter_by(user_id=current_user.id).all()
+    if form.validate_on_submit():
+        new_album_post = Album_post(user_id=current_user.id, body=form.message.data)
+        db.session.add(new_album_post)
+        db.session.commit()
+        album_posts.append(new_album_post)
+    return render_template('album_post.html', form=form, album_posts=album_posts)
 
 if __name__ == '__main__':
   db.create_all()
@@ -171,6 +206,7 @@ def create_navbar():
     login_view = View('Login', 'login')
     logout_view = View('Logout', 'logout')
     posts_view = View('Posts', 'posts')
+    album_post_view = View('Album Post', 'album_post')
     register_view = View('Register', 'register')
     about_me_view = View('About Me', 'about_me')
     class_schedule_view = View('Class Schedule', 'class_schedule')
@@ -180,6 +216,6 @@ def create_navbar():
                              class_schedule_view,
                              top_ten_songs_view)
     if current_user.is_authenticated:
-        return Navbar('MySite', home_view, posts_view, misc_subgroup, logout_view)
+        return Navbar('MySite', home_view, posts_view, album_post_view, misc_subgroup, logout_view)
     else:
         return Navbar('MySite', home_view, misc_subgroup, login_view, register_view)
