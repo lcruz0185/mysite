@@ -18,6 +18,7 @@ from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 
 from flask import redirect
+from flask import request
 from flask import url_for
 from wtforms.validators import ValidationError
 
@@ -88,7 +89,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(15))
     email = db.Column(db.String(150))
     password_hash = db.Column(db.String(128))
-#   author = db.relationship('Author', backref="user")
+#   posts = db.relationship('Post', backref="author")
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -182,6 +183,19 @@ def posts():
         db.session.commit()
         posts.append(new_post)
     return render_template('posts.html', form=form, posts=posts)
+
+'''
+@app.route('/delete_post')
+def delete_post():
+    post_id = request.args.get('id')
+    if not post_id:
+        return redirect(url_for('homepage')) #for the album post, post=?
+    post = Post.query.filter.by(id=post_id).first()
+    #if not post or post.author.id != current_user.id: return redirect(url_for('homepage'))
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(url_for('posts', posts=current_user.posts))
+'''
 
 @app.route('/album_post', methods=['GET', 'POST'])
 def album_post():
