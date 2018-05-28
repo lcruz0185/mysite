@@ -28,8 +28,6 @@ app = Flask(__name__)
 
 app.config.from_object('config.BaseConfig')
 db = SQLAlchemy(app)
-# username code (down) ****************************************
-#app.config['SQUALCHEMY_DATABASE_URI'] = 'sqlite:///relationships.db'
 
 login = LoginManager(app)
 
@@ -103,13 +101,6 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-'''
-class Author(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20))
-    user_id = db.column(db.Integer, db.ForeignKey('user.id')
-'''
-
 class PostForm(FlaskForm):
     message = StringField('Message', validators=[InputRequired(), Length(max=280)])
     submit = SubmitField('Post')
@@ -182,20 +173,20 @@ def posts():
         db.session.add(new_post)
         db.session.commit()
         posts.append(new_post)
-    return render_template('posts.html', form=form, posts=posts)
+    return render_template('posts.html', form=form, posts=current_user.posts)
 
-'''
+################################################################
 @app.route('/delete_post')
 def delete_post():
     post_id = request.args.get('id')
     if not post_id:
-        return redirect(url_for('homepage')) #for the album post, post=?
-    post = Post.query.filter.by(id=post_id).first()
-    #if not post or post.author.id != current_user.id: return redirect(url_for('homepage'))
+        return redirect(url_for('homepage'))
+    post = Post.query.filter_by(id=post_id).first()
+    if not post or post.author.id != current_user.id:
+        return redirect(url_for('homepage'))
     db.session.delete(post)
     db.session.commit()
-    return redirect(url_for('posts', posts=current_user.posts))
-'''
+    return redirect(url_for('posts'))
 
 @app.route('/album_post', methods=['GET', 'POST'])
 def album_post():

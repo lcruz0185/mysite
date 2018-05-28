@@ -8,8 +8,14 @@
 <p>Welcome to MySite!</p>
 {% endif %}
 <h3>Recent posts from users</h3>
+<table class="table">
 {% for post in posts %}
-<p>'{{ post.body }}' : {{ post.timestamp.strftime('%c') }} by: {{ post.author.username }}</p>
+<tr>
+    <td>{{ post.body }}</td>
+    <td>{{ post.timestamp.strftime('%c') }}</td>
+    <td>{{ post.author.username }}</td>
+</tr>
 {% endfor %}
+</table>
 </div>
 {% endblock %}
