@@ -9,7 +9,7 @@
 {% endif %}
 <h3>Recent posts from users</h3>
 {% for post in posts %}
-<p>'{{ post.body }}' : {{ post.timestamp.strftime('%c') }}</p>
+<p>'{{ post.body }}' : {{ post.timestamp.strftime('%c') }} by: {{ post.author.username }}</p>
 {% endfor %}
 </div>
 {% endblock %}
