@@ -118,6 +118,10 @@ def homepage():
 def about_me():
     return render_template('about_me.html')
 
+@app.route('/snap_project')
+def snap_project():
+    return render_template('snap_project.html')
+
 @app.route('/class_schedule')
 def class_schedule():
     courses = Course.query.all()
@@ -176,6 +180,7 @@ def posts():
     return render_template('posts.html', form=form, posts=current_user.posts)
 
 ################################################################
+'''
 @app.route('/delete_post')
 def delete_post():
     post_id = request.args.get('id')
@@ -187,6 +192,7 @@ def delete_post():
     db.session.delete(post)
     db.session.commit()
     return redirect(url_for('posts'))
+'''
 
 @app.route('/album_post', methods=['GET', 'POST'])
 def album_post():
@@ -215,10 +221,12 @@ def create_navbar():
     register_view = View('Register', 'register')
     about_me_view = View('About Me', 'about_me')
     class_schedule_view = View('Class Schedule', 'class_schedule')
+    snap_project_view = View('Snap Project', 'snap_project')
     top_ten_songs_view = View('Top Ten Songs', 'top_ten_songs')
     misc_subgroup = Subgroup('Misc',
                              about_me_view,
                              class_schedule_view,
+                             snap_project_view,
                              top_ten_songs_view)
     if current_user.is_authenticated:
         return Navbar('MySite', home_view, posts_view, album_post_view, misc_subgroup, logout_view)

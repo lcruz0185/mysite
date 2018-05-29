@@ -6,8 +6,13 @@
 <h3>List an Album to Listen to</h3>
 {{ wtf.quick_form(form, button_map={'submit':'primary'}) }}
 <h3>Previous Albums</h3>
+<table class="table">
 {% for album_post in album_posts %}
-<p>'{{ album_post.body }}' : {{ album_post.timestamp.strftime('%c') }}</p>
+<tr>
+    <td>{{ album_post.body }}</td>
+    <td>{{ album_post.timestamp.strftime('%c') }}</td>
+</tr>
 {% endfor %}
+</table>
 </div>
 {% endblock %}
